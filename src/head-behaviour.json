@@ -1,0 +1,202 @@
+{
+  "name": "HeadModeDecision",
+  "type": "decision",
+  "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/decisions/decisions/head_mode_decision",
+  "parameters": {},
+  "options": [
+    {
+      "option": "BALL_MODE",
+      "result": {
+        "name": "BallSeen",
+        "type": "decision",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/decisions/decisions/ball_seen",
+        "parameters": {},
+        "options": [
+          {
+            "option": "YES",
+            "result": {
+              "name": "TrackBall",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/track_ball",
+              "parameters": {}
+            }
+          },
+          {
+            "option": "NO",
+            "result": {
+              "name": "BallSearchPattern",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+              "parameters": {
+                "init": "NEAREST"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "option": "BALL_MODE_PENALTY",
+      "result": {
+        "name": "BallSeen",
+        "type": "decision",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/decisions/decisions/ball_seen",
+        "parameters": {},
+        "options": [
+          {
+            "option": "YES",
+            "result": {
+              "name": "TrackBall",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/track_ball",
+              "parameters": {}
+            }
+          },
+          {
+            "option": "NO",
+            "result": {
+              "name": "PenaltySearchPattern",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+              "parameters": {
+                "init": "NEAREST"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "option": "POST_MODE",
+      "result": {
+        "name": "PostSeen",
+        "type": "decision",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/decisions/decisions/post_seen",
+        "parameters": {},
+        "options": [
+          {
+            "option": "YES",
+            "result": {
+              "name": "FieldFeaturesSearchPattern",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+              "parameters": {
+                "init": "NEAREST"
+              }
+            }
+          },
+          {
+            "option": "NO",
+            "result": {
+              "name": "GoalSearchPattern",
+              "type": "action",
+              "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+              "parameters": {
+                "init": "NEAREST"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "option": "BALL_GOAL_TRACKING",
+      "result": {
+        "name": "Wait",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/wait",
+        "parameters": {
+          "time": 1
+        }
+      }
+    },
+    {
+      "option": "FIELD_FEATURES",
+      "result": {
+        "name": "FieldFeaturesSearchPattern",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+        "parameters": {
+          "init": "NEAREST"
+        }
+      }
+    },
+    {
+      "option": "LOOK_DOWN",
+      "result": {
+        "name": "LookDirection",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/look_at",
+        "parameters": {
+          "direction": "DOWN"
+        }
+      }
+    },
+    {
+      "option": "LOOK_FORWARD",
+      "result": {
+        "name": "LookDirection",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/look_at",
+        "parameters": {
+          "direction": "FORWARD"
+        }
+      }
+    },
+    {
+      "option": "LOOK_UP",
+      "result": {
+        "name": "LookDirection",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/look_at",
+        "parameters": {
+          "direction": "UP"
+        }
+      }
+    },
+    {
+      "option": "DONT_MOVE",
+      "result": {
+        "name": "Wait",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/wait",
+        "parameters": {
+          "time": 1
+        }
+      }
+    },
+    {
+      "option": "RECORD_VISUAL_COMPASS",
+      "result": {
+        "name": "VisualCompassRecord",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/visual_compass_record",
+        "parameters": {
+          "init": "ZERO"
+        }
+      }
+    },
+    {
+      "option": "VISUAL_COMPASS_FEATURES",
+      "result": {
+        "name": "VisualCompassSearchPattern",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+        "parameters": {
+          "init": "NEAREST"
+        }
+      }
+    },
+    {
+      "option": "LOOK_FRONT",
+      "result": {
+        "name": "FrontSearchPattern",
+        "type": "action",
+        "path": "/home/soma/coding/bit-bots/bitbots_meta/bitbots_behavior/bitbots_head_behavior/bitbots_head_behavior/actions/actions/search_pattern",
+        "parameters": {
+          "init": "NEAREST"
+        }
+      }
+    }
+  ]
+}
