@@ -8,14 +8,18 @@ export class DecisionComponent extends Component {
   }
 
   builder(node) {
+    const input = new Input("decisionInput", "decisionInput", this.socket);
+    node.addInput(input);
+    
     node.data.options.forEach((option) => {
       const output = new Output(option, option, this.socket);
       node.addOutput(output);
+      
     });
 
     // const input = new Input("BALL_MODE", "BALL_MODE", this.socket);
     // node.addInput(input);
-    console.log(node.data.parentNode);
+    // console.log(node.data.parentNode);
   }
 
   worker(node, inputs, outputs) {}

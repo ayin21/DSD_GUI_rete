@@ -6,33 +6,23 @@ import AutoArrangePlugin from "rete-auto-arrange-plugin";
 import headBehaviour from "./head-behaviour.json" assert { type: "json" };
 import { DecisionComponent } from "./num-component";
 
-async function buildChildDecisionNode(childDecision, parentNode) {
-  const options = childDecision.options.map(({ option, result }) => option);
-  const node = await decisionComponent.createNode({ options, parentNode });
-  editor.addNode(node);
-  return node;
-}
 
-async function buildRootDecisionNode() {
-  const options = headBehaviour.options.map(({ option }) => option);
-  const node = await decisionComponent.createNode({ options });
+async function buildDecisionNode(decision) {
+  const options = decision.options.map(({ option }) => option);
+  const parentNode = await decisionComponent.createNode({ options });
+  editor.addNode(parentNode);
 
-  const children = headBehaviour.options.map(({ result }) => {
+  for (const { option, result } of decision.options) {
     if (result.type == "decision") {
-      return buildChildDecisionNode(result, node);
-    }
-  });
+      const node = await buildDecisionNode(result);
 
-  editor.addNode(node);
+      editor.connect(parentNode.outputs.get(option), node.inputs.get("decisionInput"))
+    }
+  }
+
+  return parentNode;
 }
 
-// async function createNodes() {
-// const n1 = await numComponent.createNode({ num: 2 });
-// const n2 = await numComponent.createNode({ num: 8 });
-// const n3 = await boolComponent.createNode({ bool: true });
-// return [n1, n2, n3];
-// return [await buildRootDecisionNode()];
-// }
 
 const container = document.querySelector("#rete");
 const editor = new Rete.NodeEditor("rete-dsd@0.0.1", container);
@@ -70,7 +60,7 @@ engine.register(decisionComponent);
 // createNodes().then((nodes) => {
 // nodes.forEach((node) => editor.addNode(node));
 // });
-buildRootDecisionNode();
+buildDecisionNode(headBehaviour);
 editor.trigger("arrange");
 
 console.log(headBehaviour);
