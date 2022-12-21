@@ -11,7 +11,7 @@ import { ActionComponent, DecisionComponent } from "./components";
 */
 async function buildDecisionNode(decision) {
   const options = decision.options.map(({ option }) => option); // Array of direct children
-  const parentNode = await decisionComponent.createNode({ options }); // root node created with options as outputs
+  const parentNode = await decisionComponent.createNode({ options, name: decision.name }); // root node created with options as outputs
   editor.addNode(parentNode); // parent node added
 
   for (const { option, result } of decision.options) {
@@ -21,7 +21,7 @@ async function buildDecisionNode(decision) {
       editor.connect(parentNode.outputs.get(option), node.inputs.get("decisionInput")) // parent-child connection
     }
     if (result.type == "action") {
-      const actionNode = await actionComponent.createNode();
+      const actionNode = await actionComponent.createNode({name: result.name});
       editor.addNode(actionNode);
       editor.connect(parentNode.outputs.get(option), actionNode.inputs.get("decisionInput"));
     }

@@ -8,7 +8,7 @@ export class DecisionComponent extends Component {
   }
 
   builder(node) {
-    const input = new Input("decisionInput", "decisionInput", generalSocket);
+    const input = new Input("decisionInput", node.data.name, generalSocket);
     node.addInput(input);
     
     node.data.options.forEach((option) => {
@@ -32,8 +32,9 @@ export class ActionComponent extends Component {
   }
 
   builder(node) {
-    const input = new Input("decisionInput", "decisionInput", generalSocket);
+    const input = new Input("decisionInput", node.data.name, generalSocket);
     node.addInput(input);
+    console.log(node.data)
   }
 
   worker(node, inputs, outputs) {}
