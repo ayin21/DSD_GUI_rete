@@ -1,18 +1,18 @@
 import { Component, Input, Output, Socket } from "rete";
+import { generalSocket } from "./sockets";
 
 export class DecisionComponent extends Component {
   constructor() {
     const type = "Decision";
     super(type);
-    this.socket = new Socket(type);
   }
 
   builder(node) {
-    const input = new Input("decisionInput", "decisionInput", this.socket);
+    const input = new Input("decisionInput", "decisionInput", generalSocket);
     node.addInput(input);
     
     node.data.options.forEach((option) => {
-      const output = new Output(option, option, this.socket);
+      const output = new Output(option, option, generalSocket);
       node.addOutput(output);
       
     });
@@ -24,6 +24,21 @@ export class DecisionComponent extends Component {
 
   worker(node, inputs, outputs) {}
 }
+
+export class ActionComponent extends Component {
+  constructor() {
+    const type = "Action";
+    super(type);
+  }
+
+  builder(node) {
+    const input = new Input("decisionInput", "decisionInput", generalSocket);
+    node.addInput(input);
+  }
+
+  worker(node, inputs, outputs) {}
+}
+
 
 export class NumComponent extends Component {
   constructor(socket) {
