@@ -4,7 +4,8 @@ import VueRenderPlugin from "rete-vue-render-plugin";
 import AutoArrangePlugin from "rete-auto-arrange-plugin";
 
 import headBehaviour from "./head-behaviour.json" assert { type: "json" };
-import { ActionComponent, DecisionComponent } from "./components";
+import bodyBehavior from "./body-behaviour.json" assert {type: "json"};
+import { ActionComponent, DecisionComponent, SequenceComponent } from "./components";
 
 /*
 
@@ -21,15 +22,27 @@ async function buildDecisionNode(decision) {
       editor.connect(parentNode.outputs.get(option), node.inputs.get("decisionInput")) // parent-child connection
     }
     if (result.type == "action") {
-      const actionNode = await actionComponent.createNode({name: result.name});
-      editor.addNode(actionNode);
-      editor.connect(parentNode.outputs.get(option), actionNode.inputs.get("decisionInput"));
+      createActionNode(result.name,parentNode.outputs.get(option));
+    }
+    if (result.type == "sequence"){
+      const elements = result.action_sequence.map((element) => element.name);
+      const sequenceNode = await sequenceComponent.createNode({elements, name: `${option}_sequence`});
+      editor.addNode(sequenceNode);
+      editor.connect(parentNode.outputs.get(option), sequenceNode.inputs.get("sequenceInput"));
+      result.action_sequence.forEach((element, index) => {
+        createActionNode(element.name, sequenceNode.outputs.get(element.name+index));
+      });
     }
   }
 
   return parentNode;
 }
 
+async function createActionNode(name, parentOutput){
+  const actionNode = await actionComponent.createNode({name});
+      editor.addNode(actionNode);
+      editor.connect(parentOutput, actionNode.inputs.get("actionInput"));
+}
 
 const container = document.querySelector("#rete");
 const editor = new Rete.NodeEditor("rete-dsd@0.0.1", container);
@@ -62,15 +75,18 @@ editor.on(
 
 const decisionComponent = new DecisionComponent();
 const actionComponent = new ActionComponent();
+const sequenceComponent = new SequenceComponent();
 editor.register(actionComponent);
 engine.register(actionComponent);
 editor.register(decisionComponent);
 engine.register(decisionComponent);
+editor.register(sequenceComponent);
+engine.register(sequenceComponent);
 
 // createNodes().then((nodes) => {
 // nodes.forEach((node) => editor.addNode(node));
 // });
-buildDecisionNode(headBehaviour).then((node)=>editor.trigger('arrange',{node}));
+buildDecisionNode(bodyBehavior).then((node)=>editor.trigger('arrange',{node}));
 editor.trigger("arrange");
 
 console.log(headBehaviour);
